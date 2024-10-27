@@ -13,8 +13,10 @@ import jakarta.validation.constraints.Size;
 @Entity
 @Table(name = "User_Account")
 public class UserAccount implements Serializable {
-	
+
 	private static final long serialVersionUID = 1L;
+	
+	public UserAccount() {}
 	
 	public UserAccount(long accid, String fn, String ln, String userid, String pas, String add, String mail, String mob, double bal) {
 		this.accountId = accid;
