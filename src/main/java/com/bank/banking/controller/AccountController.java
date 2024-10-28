@@ -1,3 +1,4 @@
+
 package com.bank.banking.controller;
 
 
@@ -14,12 +15,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bank.banking.dto.AccountDto;
+import com.bank.banking.dto.AccountUpdateDto;
 import com.bank.banking.model.UserAccount;
 import com.bank.banking.service.AccountService;
 
@@ -37,17 +40,25 @@ public class AccountController {
 		return ResponseEntity.ok(userAccs);
 	}
 	
-	@GetMapping("/account/accountId/{accId}")
-	public ResponseEntity<UserAccount> getAccountById(@PathVariable Long accId) {
-		UserAccount userAccs = accountService.getAccountById(accId);
-		return ResponseEntity.ok(userAccs);
+	@GetMapping("/getAccount/{accountId}")
+    public ResponseEntity<UserAccount> getAccountById(@PathVariable Long accountId) {
+		UserAccount userAccs = accountService.getAccountById(accountId);
+		if (userAccs != null) {
+	        return new ResponseEntity<>(userAccs, HttpStatus.OK);
+	    } else {
+	        return new ResponseEntity<>(null, HttpStatus.NOT_FOUND); // Return 404 if not found
+	    }
 	}
-	
 	@GetMapping("/account/accountUserId/{userId}")
 	public ResponseEntity<UserAccount> getAccountByUserId(@PathVariable String userId) {
 		UserAccount userAccs = accountService.getAccountByUserId(userId);
-		return ResponseEntity.ok(userAccs);
+		if (userAccs != null) {
+	        return new ResponseEntity<>(userAccs, HttpStatus.OK);
+	    } else {
+	        return new ResponseEntity<>(null, HttpStatus.NOT_FOUND); // Return 404 if not found
+	    }	
 	}
+
 	
 	
 	@PostMapping
@@ -71,6 +82,11 @@ public class AccountController {
         UserAccount account=  accountService.withdraw(accountId, amount);
         return new ResponseEntity<>(account,HttpStatus.OK);
     }
-
-
+    
+    @PutMapping("/account/update/{accountId}")
+    public ResponseEntity<String> update(@PathVariable Long accountId, @RequestBody AccountUpdateDto updateAccount){
+    	accountService.update(accountId,updateAccount.getFirstName(),updateAccount.getLastName(),updateAccount.getPass(),updateAccount.getAddres(),updateAccount.getEmail(), updateAccount.getMobile());
+		return new ResponseEntity<>("Update Successful",HttpStatus.OK);
+    	
+    }
 }
