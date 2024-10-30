@@ -1,6 +1,8 @@
 package com.bank.banking.service;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 
 import org.hibernate.exception.ConstraintViolationException;
@@ -82,5 +84,16 @@ public class AccountServiceImpl implements AccountService {
 		}
 		account.setBalance(account.getBalance() - amount);
 		return accountRepo.save(account);
+	}
+
+	@Override
+	public void update(Long accountId, String fn, String ln, String pass, String add, String email, String mob) {
+		UserAccount account = getAccountById(accountId);
+		if (Objects.nonNull(account.getAccountId())) {
+			accountRepo.update(fn, ln, pass, add, email, mob, accountId);
+		}
+		else {
+			throw new UserNotFoundException("User not found to update");
+		}
 	}
 }

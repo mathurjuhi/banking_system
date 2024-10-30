@@ -1,0 +1,6 @@
+DROP TABLE IF EXISTS Transaction;
+CREATE TABLE Transaction(
+	 account_id BIGINT NOT NULL PRIMARY KEY, 
+	 type VARCHAR(10) NOT NULL, 
+	 amount NUMERIC(10,3) NOT NULL, 
+	 timeframe VARCHAR(30) NOT NULL);
