@@ -1,6 +1,7 @@
 package com.bank.banking.model;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -11,51 +12,24 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 @Entity
-@Table(name = "User_Account")
-public class UserAccount implements Serializable {
-
-	private static final long serialVersionUID = 1L;
+@Table(name = "User_Account"
+, schema="online_schema")
+public class UserAccount {
 	
 	public UserAccount() {}
-	
-	public UserAccount(long accid, String fn, String ln, String userid, String pas, String add, String mail, String mob, double bal) {
-		this.accountId = accid;
-		this.firstName = fn;
-		this.lastName = ln;
-		this.userId = userid;
-		this.pass = pas;
-		this.addres = add;
-		this.email = mail;
-		this.mobile = mob;
-		this.balance = bal;
+
+	public UserAccount(long accountId, long userid, long accnm, @NotNull double bal, String acctyp, boolean isact,
+			Date crdt) {
+		super();
+		this.accountId = accountId;
+		this.userid = userid;
+		this.accnm = accnm;
+		this.bal = bal;
+		this.acctyp = acctyp;
+		this.isact = isact;
+		this.crdt = crdt;
 	}
-	
-	@Id
-	@GeneratedValue
-	@Column(name = "account_id")
-	private long accountId;
 
-	@Column(name = "first_name")
-    private String firstName;
-
-	@Column(name = "last_name")
-    private String lastName;
-	
-    @NotNull
-    private double balance;
-    
-    private String email;
-	
-    @Column(name = "", unique=true)
-    @Size(min=3, max = 20)
-    private String userId;
-
-    @NotNull
-    private String pass;
-
-    private String addres;
-
-    private String mobile;
 
 	public long getAccountId() {
 		return accountId;
@@ -65,68 +39,76 @@ public class UserAccount implements Serializable {
 		this.accountId = accountId;
 	}
 
-	public String getFirstName() {
-		return firstName;
+	public long getUserid() {
+		return userid;
 	}
 
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
+	public void setUserid(long userid) {
+		this.userid = userid;
 	}
 
-	public String getLastName() {
-		return lastName;
+	public long getAccnm() {
+		return accnm;
 	}
 
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
+	public void setAccnm(long accnm) {
+		this.accnm = accnm;
 	}
 
-	public double getBalance() {
-		return balance;
+	public double getBal() {
+		return bal;
 	}
 
-	public void setBalance(double balance) {
-		this.balance = balance;
+	public void setBal(double bal) {
+		this.bal = bal;
 	}
 
-	public String getEmail() {
-		return email;
+	public String getAcctyp() {
+		return acctyp;
 	}
 
-	public void setEmail(String email) {
-		this.email = email;
+	public void setAcctyp(String acctyp) {
+		this.acctyp = acctyp;
 	}
 
-	public String getUserId() {
-		return userId;
+	public boolean isIsact() {
+		return isact;
 	}
 
-	public void setUserId(String userId) {
-		this.userId = userId;
+	public void setIsact(boolean isact) {
+		this.isact = isact;
 	}
 
-	public String getPass() {
-		return pass;
+	public Date getCrdt() {
+		return crdt;
 	}
 
-	public void setPass(String pass) {
-		this.pass = pass;
+	public void setCrdt(Date crdt) {
+		this.crdt = crdt;
 	}
 
-	public String getAddres() {
-		return addres;
-	}
+	@Id
+	@GeneratedValue
+	@Column(name = "account_id")
+	private long accountId;
 
-	public void setAddres(String addres) {
-		this.addres = addres;
-	}
+	@Column(name = "userId")
+    private long userid;
 
-	public String getMobile() {
-		return mobile;
-	}
-
-	public void setMobile(String mobile) {
-		this.mobile = mobile;
-	}
+	@Column(name = "accNum")
+    private long accnm;
+	
+    @Column (name ="balance")
+    @NotNull
+    private double bal;
+    
+    @Column(name = "acctyp")
+    private String acctyp;
+	
+    @Column(name = "isact")
+    private boolean isact;
+    
+    @Column(name = "createddate")
+    private Date crdt;
 
 }

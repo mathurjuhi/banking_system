@@ -3,7 +3,7 @@ package com.bank.banking.controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.bank.banking.model.Transaction;
+import com.bank.banking.model.TransactionDetail;
 import com.bank.banking.repository.TransactionRepository;
 import com.bank.banking.service.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,8 +22,8 @@ public class TransactionController {
 
     // API to get all transactions for a specific account
     @GetMapping("/account/{accountId}")
-    public ResponseEntity<List<Transaction>> getTransactionById(@PathVariable Long accountId) {
-        List<Transaction> transactions = (List<Transaction>) transRepo.getTransactionById(accountId);
+    public ResponseEntity<List<TransactionDetail>> getTransactionById(@PathVariable Long accountId) {
+        List<TransactionDetail> transactions = (List<TransactionDetail>) transRepo.getTransactionDetailById(accountId);
         if (transactions.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT); // Return 204 if no transactions found
         }
