@@ -1,68 +1,72 @@
 package com.bank.banking.model;
 
-import java.io.Serializable;
+import java.util.Date;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
+import jakarta.persistence.*;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
 
 @Entity
-@Table(name = "User_Account")
-public class UserAccount implements Serializable {
-
-	private static final long serialVersionUID = 1L;
-	
-	public UserAccount() {}
-	
-	public UserAccount(long accid, String fn, String ln, String userid, String pas, String add, String mail, String mob, double bal) {
-		this.accountId = accid;
-		this.firstName = fn;
-		this.lastName = ln;
-		this.userId = userid;
-		this.pass = pas;
-		this.addres = add;
-		this.email = mail;
-		this.mobile = mob;
-		this.balance = bal;
-	}
+@Table(name = "User_Account", schema="online_schema")
+public class UserAccount{
 	
 	@Id
 	@GeneratedValue
-	@Column(name = "account_id")
-	private long accountId;
-
+	@Column(name = "user_id")
+	@NotNull
+	private long userId;
+	
 	@Column(name = "first_name")
-    private String firstName;
-
+	private String firstName;
+	
 	@Column(name = "last_name")
-    private String lastName;
+	private String lastName;
 	
-    @NotNull
-    private double balance;
-    
-    private String email;
+	@Column(name = "user_name")
+	@NotNull
+	private String userName;
 	
-    @Column(name = "", unique=true)
-    @Size(min=3, max = 20)
-    private String userId;
-
-    @NotNull
-    private String pass;
-
-    private String addres;
-
-    private String mobile;
-
-	public long getAccountId() {
-		return accountId;
+	@Column(name = "pass")
+	private String password;
+	
+	@Column(name = "addres")
+	private String address;
+	
+	@Column(name = "dob")
+	private Date dob;
+	
+	@Column(name = "email")
+	private String email;
+	
+	@Column(name = "mobile")
+	private long mobile;
+	
+	public UserAccount() {
+		
 	}
 
-	public void setAccountId(long accountId) {
-		this.accountId = accountId;
+	public UserAccount(@NotNull long userId, String firstName, String lastName, @NotNull String userName,
+			String password, String address, Date dob, String email, long mobile) {
+		super();
+		this.userId = userId;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.userName = userName;
+		this.password = password;
+		this.address = address;
+		this.dob = dob;
+		this.email = email;
+		this.mobile = mobile;
+	}
+
+	public long getUserId() {
+		return userId;
+	}
+
+	public void setUserId(long userId) {
+		this.userId = userId;
 	}
 
 	public String getFirstName() {
@@ -81,12 +85,36 @@ public class UserAccount implements Serializable {
 		this.lastName = lastName;
 	}
 
-	public double getBalance() {
-		return balance;
+	public String getUserName() {
+		return userName;
 	}
 
-	public void setBalance(double balance) {
-		this.balance = balance;
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public Date getDob() {
+		return dob;
+	}
+
+	public void setDob(Date dob) {
+		this.dob = dob;
 	}
 
 	public String getEmail() {
@@ -97,36 +125,21 @@ public class UserAccount implements Serializable {
 		this.email = email;
 	}
 
-	public String getUserId() {
-		return userId;
-	}
-
-	public void setUserId(String userId) {
-		this.userId = userId;
-	}
-
-	public String getPass() {
-		return pass;
-	}
-
-	public void setPass(String pass) {
-		this.pass = pass;
-	}
-
-	public String getAddres() {
-		return addres;
-	}
-
-	public void setAddres(String addres) {
-		this.addres = addres;
-	}
-
-	public String getMobile() {
+	public long getMobile() {
 		return mobile;
 	}
 
-	public void setMobile(String mobile) {
+	public void setMobile(long mobile) {
 		this.mobile = mobile;
 	}
+
+	@Override
+	public String toString() {
+		return "UserAccount [userId=" + userId + ", firstName=" + firstName + ", lastName=" + lastName + ", userName="
+				+ userName + ", password=" + password + ", address=" + address + ", dob=" + dob + ", email=" + email
+				+ ", mobile=" + mobile + "]";
+	}
+	
+	
 
 }

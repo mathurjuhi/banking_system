@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.bank.banking.dto.AccountDto;
 import com.bank.banking.dto.AccountUpdateDto;
 import com.bank.banking.model.UserAccount;
+import com.bank.banking.model.AccountDetail;
 import com.bank.banking.service.AccountService;
 
 @RestController
@@ -42,18 +43,18 @@ public class AccountController {
 	
 	@GetMapping("/getAccount/{accountId}")
     public ResponseEntity<UserAccount> getAccountById(@PathVariable Long accountId) {
-		UserAccount userAccs = accountService.getAccountById(accountId);
-		if (userAccs != null) {
-	        return new ResponseEntity<>(userAccs, HttpStatus.OK);
+		UserAccount account = accountService.getAccountById(accountId);
+		if (account != null) {
+	        return new ResponseEntity<>(account, HttpStatus.OK);
 	    } else {
 	        return new ResponseEntity<>(null, HttpStatus.NOT_FOUND); // Return 404 if not found
 	    }
 	}
 	@GetMapping("/account/accountUserId/{userId}")
 	public ResponseEntity<UserAccount> getAccountByUserId(@PathVariable String userId) {
-		UserAccount userAccs = accountService.getAccountByUserId(userId);
-		if (userAccs != null) {
-	        return new ResponseEntity<>(userAccs, HttpStatus.OK);
+		UserAccount account = accountService.getAccountByUserId(userId);
+		if (account != null) {
+	        return new ResponseEntity<>(account, HttpStatus.OK);
 	    } else {
 	        return new ResponseEntity<>(null, HttpStatus.NOT_FOUND); // Return 404 if not found
 	    }	
@@ -72,8 +73,8 @@ public class AccountController {
 	@PostMapping("/account/deposit/{accountId}")
     public  ResponseEntity<UserAccount> deposit(@PathVariable Long accountId, @RequestBody Map<String, Double> request) {
         Double amount = request.get("amount");
-        UserAccount account= accountService.deposit(accountId, amount);
-        return new ResponseEntity<>(account,HttpStatus.OK);
+        UserAccount Acctyp= accountService.deposit(accountId, amount);
+        return new ResponseEntity<>(Acctyp,HttpStatus.OK);
     }
 
     @PostMapping("/account/withdraw/{accountId}")
