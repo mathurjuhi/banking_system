@@ -13,6 +13,8 @@ import com.bank.banking.dto.AccountDto;
 import com.bank.banking.exception.InsufficientFundException;
 import com.bank.banking.exception.UserNotFoundException;
 import com.bank.banking.model.UserAccount;
+import com.bank.banking.model.AccountDetail;
+import com.bank.banking.model.TransactionDetail;
 import com.bank.banking.repository.AccountRepository;
 
 @Service
@@ -29,9 +31,9 @@ public class AccountServiceImpl implements AccountService {
 
 	@Override
 	public UserAccount getAccountByUserId(String userId) {
-		Optional<UserAccount> userAcc = Optional.ofNullable(accountRepo.findByUserId(userId));
-		if (userAcc.isPresent()) {
-			return userAcc.get();
+		Optional<UserAccount> account = Optional.ofNullable(accountRepo.findByUserId(userId));
+		if (account.isPresent()) {
+			return account.get();
 		} else {
 			throw new UserNotFoundException("Account with userId : " + userId + " Not Found");
 		}
@@ -39,9 +41,9 @@ public class AccountServiceImpl implements AccountService {
 
 	@Override
 	public UserAccount getAccountById(long id) {
-		Optional<UserAccount> userAcc = accountRepo.findById(id);
-		if (userAcc.isPresent()) {
-			return userAcc.get();
+		Optional<UserAccount> account = accountRepo.findById(id);
+		if (account.isPresent()) {
+			return account.get();
 		} else {
 			throw new UserNotFoundException("Account with Id : " + id + " Not Found");
 		}
@@ -49,7 +51,7 @@ public class AccountServiceImpl implements AccountService {
 
 	@Override
 	public UserAccount createAccount(AccountDto account) {
-		UserAccount userAccount = new UserAccount();
+	/*	UserAccount userAccount = new UserAccount();
 		userAccount.setAccountId(account.getAccountId());
 		userAccount.setFirstName(account.getFirstName());
 		userAccount.setLastName(account.getLastName());
@@ -66,34 +68,35 @@ public class AccountServiceImpl implements AccountService {
 		else
 			throw new ConstraintViolationException("User with user id:" + account.getUserId() + "already exist.", null,
 					account.getUserId());
-
+*/
+		return null;
 	}
 
 	@Override
 	public UserAccount deposit(Long id, double amount) {
 		UserAccount account = getAccountById(id);
-		account.setBalance(account.getBalance() + amount);
+	/*	account.setBalance(account.getBalance() + amount);  */
 		return accountRepo.save(account);
 	}
 
 	@Override
 	public UserAccount withdraw(Long id, double amount) {
 		UserAccount account = getAccountById(id);
-		if (account.getBalance() < amount) {
+	/* 	if (account.getBalance() < amount) {
 			throw new InsufficientFundException("User has not sufficient balance to withdraw");
 		}
-		account.setBalance(account.getBalance() - amount);
+		account.setBalance(account.getBalance() - amount);  */
 		return accountRepo.save(account);
 	}
 
 	@Override
 	public void update(Long accountId, String fn, String ln, String pass, String add, String email, String mob) {
 		UserAccount account = getAccountById(accountId);
-		if (Objects.nonNull(account.getAccountId())) {
+	/*	if (Objects.nonNull(account.getAccountId())) {
 			accountRepo.update(fn, ln, pass, add, email, mob, accountId);
 		}
 		else {
 			throw new UserNotFoundException("User not found to update");
-		}
+		}  */
 	}
 }

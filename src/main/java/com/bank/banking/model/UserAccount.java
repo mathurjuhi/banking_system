@@ -1,114 +1,145 @@
 package com.bank.banking.model;
 
-import java.io.Serializable;
 import java.util.Date;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
+import jakarta.persistence.*;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
 
 @Entity
-@Table(name = "User_Account"
-, schema="online_schema")
-public class UserAccount {
+@Table(name = "User_Account", schema="online_schema")
+public class UserAccount{
 	
-	public UserAccount() {}
-
-	public UserAccount(long accountId, long userid, long accnm, @NotNull double bal, String acctyp, boolean isact,
-			Date crdt) {
-		super();
-		this.accountId = accountId;
-		this.userid = userid;
-		this.accnm = accnm;
-		this.bal = bal;
-		this.acctyp = acctyp;
-		this.isact = isact;
-		this.crdt = crdt;
-	}
-
-
-	public long getAccountId() {
-		return accountId;
-	}
-
-	public void setAccountId(long accountId) {
-		this.accountId = accountId;
-	}
-
-	public long getUserid() {
-		return userid;
-	}
-
-	public void setUserid(long userid) {
-		this.userid = userid;
-	}
-
-	public long getAccnm() {
-		return accnm;
-	}
-
-	public void setAccnm(long accnm) {
-		this.accnm = accnm;
-	}
-
-	public double getBal() {
-		return bal;
-	}
-
-	public void setBal(double bal) {
-		this.bal = bal;
-	}
-
-	public String getAcctyp() {
-		return acctyp;
-	}
-
-	public void setAcctyp(String acctyp) {
-		this.acctyp = acctyp;
-	}
-
-	public boolean isIsact() {
-		return isact;
-	}
-
-	public void setIsact(boolean isact) {
-		this.isact = isact;
-	}
-
-	public Date getCrdt() {
-		return crdt;
-	}
-
-	public void setCrdt(Date crdt) {
-		this.crdt = crdt;
-	}
-
 	@Id
 	@GeneratedValue
-	@Column(name = "account_id")
-	private long accountId;
-
-	@Column(name = "userId")
-    private long userid;
-
-	@Column(name = "accNum")
-    private long accnm;
+	@Column(name = "user_id")
+	@NotNull
+	private long userId;
 	
-    @Column (name ="balance")
-    @NotNull
-    private double bal;
-    
-    @Column(name = "acctyp")
-    private String acctyp;
+	@Column(name = "first_name")
+	private String firstName;
 	
-    @Column(name = "isact")
-    private boolean isact;
-    
-    @Column(name = "createddate")
-    private Date crdt;
+	@Column(name = "last_name")
+	private String lastName;
+	
+	@Column(name = "user_name")
+	@NotNull
+	private String userName;
+	
+	@Column(name = "pass")
+	private String password;
+	
+	@Column(name = "addres")
+	private String address;
+	
+	@Column(name = "dob")
+	private Date dob;
+	
+	@Column(name = "email")
+	private String email;
+	
+	@Column(name = "mobile")
+	private long mobile;
+	
+	public UserAccount() {
+		
+	}
+
+	public UserAccount(@NotNull long userId, String firstName, String lastName, @NotNull String userName,
+			String password, String address, Date dob, String email, long mobile) {
+		super();
+		this.userId = userId;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.userName = userName;
+		this.password = password;
+		this.address = address;
+		this.dob = dob;
+		this.email = email;
+		this.mobile = mobile;
+	}
+
+	public long getUserId() {
+		return userId;
+	}
+
+	public void setUserId(long userId) {
+		this.userId = userId;
+	}
+
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public Date getDob() {
+		return dob;
+	}
+
+	public void setDob(Date dob) {
+		this.dob = dob;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public long getMobile() {
+		return mobile;
+	}
+
+	public void setMobile(long mobile) {
+		this.mobile = mobile;
+	}
+
+	@Override
+	public String toString() {
+		return "UserAccount [userId=" + userId + ", firstName=" + firstName + ", lastName=" + lastName + ", userName="
+				+ userName + ", password=" + password + ", address=" + address + ", dob=" + dob + ", email=" + email
+				+ ", mobile=" + mobile + "]";
+	}
+	
+	
 
 }

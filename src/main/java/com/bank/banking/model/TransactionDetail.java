@@ -6,13 +6,12 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 
 @Entity
-@Table(name = "TransactionDetail", schema="online_schema")
+@Table(name = "Transaction_Detail", schema="online_schema")
 public class TransactionDetail {
 	
 	@Id
@@ -20,15 +19,15 @@ public class TransactionDetail {
 	@Column(name = "transaction_id")
 	private Long transactionId;
 
-	@ManyToOne
+	/*@ManyToOne */
 	@Column(name = "account_id")
-	private UserAccount user;
+	private Long accountDetail;
 	
 	@Column(name = "date_of_transaction")
     private Date transactionDate;
 	
-	@Column(name = "type")
-	private String accType;
+	@Column(name = "transaction_type")
+	private String transactionType;
 	
 	@NotNull
 	private Double amount;
@@ -42,12 +41,12 @@ public class TransactionDetail {
 	public TransactionDetail() {
 	}
 	
-	public TransactionDetail(Long transactionId, UserAccount user, Date transactionDate, String accType,
+	public TransactionDetail(Long transactionId, Long accountDetail, Date transactionDate, String accType,
 			@NotNull Double amount, Double credit, Double debit) {
 		this.transactionId = transactionId;
-		this.user = user;
+		this.accountDetail = accountDetail;
 		this.transactionDate = transactionDate;
-		this.accType = accType;
+		this.transactionType = accType;
 		this.amount = amount;
 		this.credit = credit;
 		this.debit = debit;
@@ -61,12 +60,12 @@ public class TransactionDetail {
 		this.transactionId = transactionId;
 	}
 
-	public UserAccount getUser() {
-		return user;
+	public Long getAccountDetail() {
+		return accountDetail;
 	}
 
-	public void setUser(UserAccount user) {
-		this.user = user;
+	public void setAccountDetail(Long accountDetail) {
+		this.accountDetail = accountDetail;
 	}
 
 	public Date getTransactionDate() {
@@ -77,12 +76,12 @@ public class TransactionDetail {
 		this.transactionDate = transactionDate;
 	}
 
-	public String getAccType() {
-		return accType;
+	public String getTransactionType() {
+		return transactionType;
 	}
 
-	public void setAccType(String accType) {
-		this.accType = accType;
+	public void setTransactionType(String transactionType) {
+		this.transactionType = transactionType;
 	}
 
 	public Double getAmount() {

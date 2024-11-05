@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.bank.banking.dto.AccountDto;
+import com.bank.banking.model.AccountDetail;
 import com.bank.banking.model.UserAccount;
 
 public interface AccountService {
