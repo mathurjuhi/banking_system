@@ -21,7 +21,7 @@ CREATE TABLE online_schema.User_Account(
 CREATE TABLE online_schema.Account_Detail(
 	account_id BIGINT NOT NULL PRIMARY KEY,
  	user_id VARCHAR(20) NOT NULL REFERENCES User_Account(user_id),
- 	acc_num BIGINT NOT NULL,
+ 	acc_num VARCHAR(12) NOT NULL,
   	acc_type VARCHAR(10) NOT NULL,
   	is_active BOOLEAN, 
   	created_date VARCHAR(25), 

@@ -1,11 +1,15 @@
 package com.bank.banking.model;
 
 import java.util.Date;
+import java.util.List;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 
@@ -20,11 +24,8 @@ public class AccountDetail {
 	@Column(name = "account_id")
 	private long accountId;
 
-	@Column(name = "user_id")
-    private long userId;
-
 	@Column(name = "acc_num")
-    private long accNum;
+    private String accNum;
 	
     @Column (name ="balance")
     @NotNull
@@ -39,14 +40,17 @@ public class AccountDetail {
     @Column(name = "created_date")
     private Date createdDate;
 
+    @ManyToOne
+    @JoinColumn(name="user_id")
+    private UserAccount userAccount;
     
+    @OneToMany(mappedBy="accountDetail")
+    private List<TransactionDetail> transactionDetail;
     
-    
-	public AccountDetail(long accountId, long userId, long accNum, @NotNull double balance, String accType,
+	public AccountDetail(long accountId, String accNum, @NotNull double balance, String accType,
 			boolean isActive, Date createdDate) {
 		super();
 		this.accountId = accountId;
-		this.userId = userId;
 		this.accNum = accNum;
 		this.balance = balance;
 		this.accType = accType;
@@ -62,19 +66,11 @@ public class AccountDetail {
 		this.accountId = accountId;
 	}
 
-	public long getUserId() {
-		return userId;
-	}
-
-	public void setUserId(long userId) {
-		this.userId = userId;
-	}
-
-	public long getAccNum() {
+	public String getAccNum() {
 		return accNum;
 	}
 
-	public void setAccNum(long accNum) {
+	public void setAccNum(String accNum) {
 		this.accNum = accNum;
 	}
 
@@ -109,10 +105,19 @@ public class AccountDetail {
 	public void setCreatedDate(Date createdDate) {
 		this.createdDate = createdDate;
 	}
+	
+
+	public UserAccount getUserAccount() {
+		return userAccount;
+	}
+
+	public void setUserAccount(UserAccount userAccount) {
+		this.userAccount = userAccount;
+	}
 
 	@Override
 	public String toString() {
-		return "AccountDetail [accountId=" + accountId + ", userId=" + userId + ", accNum=" + accNum + ", balance="
+		return "AccountDetail [accountId=" + accountId +  ", accNum=" + accNum + ", balance="
 				+ balance + ", accType=" + accType + ", isActive=" + isActive + ", createdDate=" + createdDate + "]";
 	}
 

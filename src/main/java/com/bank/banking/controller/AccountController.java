@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.bank.banking.dto.UserDto;
 import com.bank.banking.dto.AccountDto;
 import com.bank.banking.dto.AccountUpdateDto;
 import com.bank.banking.model.UserAccount;
@@ -36,14 +37,14 @@ public class AccountController {
 	private AccountService accountService;
 	
 	@GetMapping("/accounts")
-	public ResponseEntity<List<UserAccount>> getAllAccounts() {
-		List<UserAccount> userAccs = accountService.getAllAccounts();
+	public ResponseEntity<List<AccountDetail>> getAllAccounts() {
+		List<AccountDetail> userAccs = accountService.getAllAccounts();
 		return ResponseEntity.ok(userAccs);
 	}
 	
 	@GetMapping("/getAccount/{accountId}")
-    public ResponseEntity<UserAccount> getAccountById(@PathVariable Long accountId) {
-		UserAccount account = accountService.getAccountById(accountId);
+    public ResponseEntity<AccountDetail> getAccountById(@PathVariable Long accountId) {
+		AccountDetail account = accountService.getAccountById(accountId);
 		if (account != null) {
 	        return new ResponseEntity<>(account, HttpStatus.OK);
 	    } else {
@@ -51,8 +52,8 @@ public class AccountController {
 	    }
 	}
 	@GetMapping("/account/accountUserId/{userId}")
-	public ResponseEntity<UserAccount> getAccountByUserId(@PathVariable String userId) {
-		UserAccount account = accountService.getAccountByUserId(userId);
+	public ResponseEntity<AccountDetail> getAccountByUserId(@PathVariable String userId) {
+		AccountDetail account = accountService.getAccountByUserId(userId);
 		if (account != null) {
 	        return new ResponseEntity<>(account, HttpStatus.OK);
 	    } else {
@@ -62,25 +63,34 @@ public class AccountController {
 
 	
 	
+	/*
+	 * @PostMapping
+	 * 
+	 * @RequestMapping("/add/account") public ResponseEntity<Object>
+	 * createNewAccount(@RequestBody UserDto accountDto){
+	 * 
+	 * UserAccount account = accountService.createAccount(accountDto); return new
+	 * ResponseEntity<>(account,HttpStatus.OK); }
+	 */
 	@PostMapping
 	@RequestMapping("/add/account")
-	public ResponseEntity<Object> createNewAccount(@RequestBody AccountDto accountDto){
+	public ResponseEntity<AccountDetail> createNewAccount(@RequestBody AccountDto accountDto){
 		
-		UserAccount account = accountService.createAccount(accountDto);
+		AccountDetail account = accountService.createAccount(accountDto);
 		return new ResponseEntity<>(account,HttpStatus.OK);
 	}
 	
 	@PostMapping("/account/deposit/{accountId}")
-    public  ResponseEntity<UserAccount> deposit(@PathVariable Long accountId, @RequestBody Map<String, Double> request) {
+    public  ResponseEntity<AccountDetail> deposit(@PathVariable Long accountId, @RequestBody Map<String, Double> request) {
         Double amount = request.get("amount");
-        UserAccount Acctyp= accountService.deposit(accountId, amount);
+        AccountDetail Acctyp= accountService.deposit(accountId, amount);
         return new ResponseEntity<>(Acctyp,HttpStatus.OK);
     }
 
     @PostMapping("/account/withdraw/{accountId}")
-    public ResponseEntity<UserAccount> withdraw(@PathVariable Long accountId, @RequestBody Map<String, Double> request) {
+    public ResponseEntity<AccountDetail> withdraw(@PathVariable Long accountId, @RequestBody Map<String, Double> request) {
         Double amount = request.get("amount");
-        UserAccount account=  accountService.withdraw(accountId, amount);
+        AccountDetail account=  accountService.withdraw(accountId, amount);
         return new ResponseEntity<>(account,HttpStatus.OK);
     }
     

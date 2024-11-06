@@ -1,37 +1,39 @@
 package com.bank.banking.service;
 
+import java.util.Date;
 import java.util.List;
-import java.util.Map;
-import java.util.Objects;
 import java.util.Optional;
 
-import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.bank.banking.dto.AccountDto;
-import com.bank.banking.exception.InsufficientFundException;
+import com.bank.banking.dto.UserDto;
 import com.bank.banking.exception.UserNotFoundException;
-import com.bank.banking.model.UserAccount;
 import com.bank.banking.model.AccountDetail;
-import com.bank.banking.model.TransactionDetail;
+import com.bank.banking.model.UserAccount;
 import com.bank.banking.repository.AccountRepository;
+import com.bank.banking.repository.UserRepository;
+import com.bank.banking.utils.Utils;
 
 @Service
 public class AccountServiceImpl implements AccountService {
 
 	@Autowired
 	private AccountRepository accountRepo;
+	
+	@Autowired
+	private UserRepository userRepository;
 
 	@Override
-	public List<UserAccount> getAllAccounts() {
-		List<UserAccount> userAccs = accountRepo.findAll();
+	public List<AccountDetail> getAllAccounts() {
+		List<AccountDetail> userAccs = accountRepo.findAll();
 		return userAccs;
 	}
 
 	@Override
-	public UserAccount getAccountByUserId(String userId) {
-		Optional<UserAccount> account = Optional.ofNullable(accountRepo.findByUserId(userId));
+	public AccountDetail getAccountByUserId(String userId) {
+		Optional<AccountDetail> account = Optional.ofNullable(accountRepo.findByUserId(userId));
 		if (account.isPresent()) {
 			return account.get();
 		} else {
@@ -40,8 +42,8 @@ public class AccountServiceImpl implements AccountService {
 	}
 
 	@Override
-	public UserAccount getAccountById(long id) {
-		Optional<UserAccount> account = accountRepo.findById(id);
+	public AccountDetail getAccountById(long id) {
+		Optional<AccountDetail> account = accountRepo.findById(id);
 		if (account.isPresent()) {
 			return account.get();
 		} else {
@@ -50,7 +52,21 @@ public class AccountServiceImpl implements AccountService {
 	}
 
 	@Override
-	public UserAccount createAccount(AccountDto account) {
+	public AccountDetail createAccount(AccountDto accountDto) {
+		
+		UserAccount user=userRepository.findByUserId(accountDto.getUserId());
+		if(user==null)
+			throw new UserNotFoundException("User Id : " + accountDto.getUserId() + " Not Found");
+		
+		AccountDetail account = new AccountDetail();
+		account.setAccNum(Utils.generateAccountNumber(10));
+		account.setAccType(accountDto.getAccountType());
+		account.setActive(true);
+		account.setBalance(0);
+		account.setCreatedDate(new Date());
+		account.setUserAccount(user);
+		AccountDetail accountdetail =accountRepo.save(account);
+		return accountdetail;
 	/*	UserAccount userAccount = new UserAccount();
 		userAccount.setAccountId(account.getAccountId());
 		userAccount.setFirstName(account.getFirstName());
@@ -69,19 +85,19 @@ public class AccountServiceImpl implements AccountService {
 			throw new ConstraintViolationException("User with user id:" + account.getUserId() + "already exist.", null,
 					account.getUserId());
 */
-		return null;
+		
 	}
 
 	@Override
-	public UserAccount deposit(Long id, double amount) {
-		UserAccount account = getAccountById(id);
+	public AccountDetail deposit(Long id, double amount) {
+		AccountDetail account = getAccountById(id);
 	/*	account.setBalance(account.getBalance() + amount);  */
 		return accountRepo.save(account);
 	}
 
 	@Override
-	public UserAccount withdraw(Long id, double amount) {
-		UserAccount account = getAccountById(id);
+	public AccountDetail withdraw(Long id, double amount) {
+		AccountDetail account = getAccountById(id);
 	/* 	if (account.getBalance() < amount) {
 			throw new InsufficientFundException("User has not sufficient balance to withdraw");
 		}
@@ -91,7 +107,7 @@ public class AccountServiceImpl implements AccountService {
 
 	@Override
 	public void update(Long accountId, String fn, String ln, String pass, String add, String email, String mob) {
-		UserAccount account = getAccountById(accountId);
+		AccountDetail account = getAccountById(accountId);
 	/*	if (Objects.nonNull(account.getAccountId())) {
 			accountRepo.update(fn, ln, pass, add, email, mob, accountId);
 		}

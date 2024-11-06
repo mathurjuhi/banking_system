@@ -1,6 +1,9 @@
 package com.bank.banking.model;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import jakarta.persistence.*;
 import jakarta.persistence.GeneratedValue;
@@ -35,7 +38,7 @@ public class UserAccount{
 	private String address;
 	
 	@Column(name = "dob")
-	private Date dob;
+	private LocalDate dob;
 	
 	@Column(name = "email")
 	private String email;
@@ -43,12 +46,15 @@ public class UserAccount{
 	@Column(name = "mobile")
 	private long mobile;
 	
+	@OneToMany(mappedBy = "userAccount")
+	private List<AccountDetail> accounts = new ArrayList<>();
+	
 	public UserAccount() {
 		
 	}
 
 	public UserAccount(@NotNull long userId, String firstName, String lastName, @NotNull String userName,
-			String password, String address, Date dob, String email, long mobile) {
+			String password, String address, LocalDate dob, String email, long mobile) {
 		super();
 		this.userId = userId;
 		this.firstName = firstName;
@@ -109,11 +115,11 @@ public class UserAccount{
 		this.address = address;
 	}
 
-	public Date getDob() {
+	public LocalDate getDob() {
 		return dob;
 	}
 
-	public void setDob(Date dob) {
+	public void setDob(LocalDate dob) {
 		this.dob = dob;
 	}
 
@@ -131,6 +137,15 @@ public class UserAccount{
 
 	public void setMobile(long mobile) {
 		this.mobile = mobile;
+	}
+
+	
+	public List<AccountDetail> getAccounts() {
+		return accounts;
+	}
+
+	public void setAccounts(List<AccountDetail> accounts) {
+		this.accounts = accounts;
 	}
 
 	@Override

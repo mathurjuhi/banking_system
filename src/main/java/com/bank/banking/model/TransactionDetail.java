@@ -6,6 +6,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
@@ -19,9 +20,9 @@ public class TransactionDetail {
 	@Column(name = "transaction_id")
 	private Long transactionId;
 
-	/*@ManyToOne */
-	@Column(name = "account_id")
-	private Long accountDetail;
+	@ManyToOne 
+	@JoinColumn(name = "account_id")
+	private AccountDetail accountDetail;
 	
 	@Column(name = "date_of_transaction")
     private Date transactionDate;
@@ -41,10 +42,10 @@ public class TransactionDetail {
 	public TransactionDetail() {
 	}
 	
-	public TransactionDetail(Long transactionId, Long accountDetail, Date transactionDate, String accType,
+	public TransactionDetail(Long transactionId, Date transactionDate, String accType,
 			@NotNull Double amount, Double credit, Double debit) {
 		this.transactionId = transactionId;
-		this.accountDetail = accountDetail;
+		//this.accountDetail = accountDetail;
 		this.transactionDate = transactionDate;
 		this.transactionType = accType;
 		this.amount = amount;
@@ -60,11 +61,11 @@ public class TransactionDetail {
 		this.transactionId = transactionId;
 	}
 
-	public Long getAccountDetail() {
+	public AccountDetail getAccountDetail() {
 		return accountDetail;
 	}
 
-	public void setAccountDetail(Long accountDetail) {
+	public void setAccountDetail(AccountDetail accountDetail) {
 		this.accountDetail = accountDetail;
 	}
 
