@@ -28,6 +28,8 @@ import com.bank.banking.model.UserAccount;
 import com.bank.banking.model.AccountDetail;
 import com.bank.banking.service.AccountService;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/banking")
 public class AccountController {
@@ -63,7 +65,7 @@ public class AccountController {
 
 	@PostMapping
 	@RequestMapping("/add/account")
-	public ResponseEntity<AccountDetail> createNewAccount(@RequestBody AccountDto accountDto){
+	public ResponseEntity<AccountDetail> createNewAccount(@Valid @RequestBody AccountDto accountDto){
 		
 		AccountDetail account = accountService.createAccount(accountDto);
 		return new ResponseEntity<>(account,HttpStatus.OK);
