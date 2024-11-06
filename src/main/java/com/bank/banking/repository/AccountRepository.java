@@ -19,6 +19,8 @@ public interface AccountRepository extends JpaRepository<AccountDetail, Long> {
 	@Modifying
 	@Query(value = "UPDATE USER_ACCOUNT SET FIRST_NAME=?1, LAST_NAME=?2,PASS=?3,ADDRES=?4, EMAIL=?5, MOBILE=?6 WHERE ACCOUNT_ID=?7", nativeQuery = true)
 	void update(String fn, String ln, String pass, String add, String email, String mob, Long accountId);
+	
+	AccountDetail findByAccountId(long accountId);
 
 	
 }

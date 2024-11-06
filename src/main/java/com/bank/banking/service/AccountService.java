@@ -18,10 +18,6 @@ public interface AccountService {
 
 	public AccountDetail createAccount(AccountDto account) ;
 
-	public AccountDetail deposit(Long id, double amount);
-
-	public AccountDetail withdraw(Long id, double amount);
-
 	public void update(Long accountId, String fn, String ln, String pass, String add, String email, String mob);
 
 }

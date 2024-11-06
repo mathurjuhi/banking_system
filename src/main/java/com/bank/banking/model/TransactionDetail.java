@@ -12,45 +12,47 @@ import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 
 @Entity
-@Table(name = "Transaction_Detail", schema="online_schema")
+@Table(name = "Transaction_Detail", schema = "online_schema")
 public class TransactionDetail {
-	
+
 	@Id
 	@GeneratedValue
 	@Column(name = "transaction_id")
 	private Long transactionId;
 
-	@ManyToOne 
+	@ManyToOne
 	@JoinColumn(name = "account_id")
 	private AccountDetail accountDetail;
-	
+
 	@Column(name = "date_of_transaction")
-    private Date transactionDate;
-	
+	private Date transactionDate;
+
 	@Column(name = "transaction_type")
 	private String transactionType;
-	
+
 	@NotNull
 	private Double amount;
-	
-	private Double credit;
-	
-	private Double debit;
-	
-	
+
+	/*
+	 * private Double credit;
+	 * 
+	 * private Double debit;
+	 */
+
+	private Double balance;
 
 	public TransactionDetail() {
 	}
-	
-	public TransactionDetail(Long transactionId, Date transactionDate, String accType,
-			@NotNull Double amount, Double credit, Double debit) {
+
+	public TransactionDetail(Long transactionId, AccountDetail accountDetail, Date transactionDate,
+			String transactionType, @NotNull Double amount, Double balance) {
+		super();
 		this.transactionId = transactionId;
-		//this.accountDetail = accountDetail;
+		this.accountDetail = accountDetail;
 		this.transactionDate = transactionDate;
-		this.transactionType = accType;
+		this.transactionType = transactionType;
 		this.amount = amount;
-		this.credit = credit;
-		this.debit = debit;
+		this.balance = balance;
 	}
 
 	public Long getTransactionId() {
@@ -93,21 +95,22 @@ public class TransactionDetail {
 		this.amount = amount;
 	}
 
-	public Double getCredit() {
-		return credit;
+	public Double getBalance() {
+		return balance;
 	}
 
-	public void setCredit(Double credit) {
-		this.credit = credit;
+	public void setBalance(Double balance) {
+		this.balance = balance;
 	}
 
-	public Double getDebit() {
-		return debit;
-	}
-
-	public void setDebit(Double debit) {
-		this.debit = debit;
-	}
-	
-	
+	/*
+	 * public Double getCredit() { return credit; }
+	 * 
+	 * public void setCredit(Double credit) { this.credit = credit; }
+	 * 
+	 * public Double getDebit() { return debit; }
+	 * 
+	 * public void setDebit(Double debit) { this.debit = debit; }
+	 * 
+	 */
 }

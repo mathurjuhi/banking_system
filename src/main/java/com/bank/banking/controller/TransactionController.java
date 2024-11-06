@@ -1,8 +1,6 @@
 package com.bank.banking.controller;
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
+import com.bank.banking.model.AccountDetail;
 import com.bank.banking.model.TransactionDetail;
 import com.bank.banking.repository.TransactionRepository;
 import com.bank.banking.service.TransactionService;
@@ -11,13 +9,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/banking")
 public class TransactionController {
 
     @Autowired
-    private TransactionService TransSer;
+    private TransactionService transactionService;
     private TransactionRepository transRepo;
 
     // API to get all transactions for a specific account
@@ -30,4 +29,18 @@ public class TransactionController {
         else {
         return new ResponseEntity<>(transactions, HttpStatus.OK);
     }}
+    
+    @PostMapping("/transaction/deposit/{accountId}")
+    public  ResponseEntity<TransactionDetail> deposit(@PathVariable Long accountId, @RequestBody Map<String, Double> request) {
+        Double amount = request.get("amount");
+        TransactionDetail transaction= transactionService.deposit(accountId, amount);
+        return new ResponseEntity<>(transaction,HttpStatus.OK);
+    }
+
+    @PostMapping("/transaction/withdraw/{accountId}")
+    public ResponseEntity<TransactionDetail> withdraw(@PathVariable Long accountId, @RequestBody Map<String, Double> request) {
+        Double amount = request.get("amount");
+        TransactionDetail transaction=  transactionService.withdraw(accountId, amount);
+        return new ResponseEntity<>(transaction,HttpStatus.OK);
+    }
 }

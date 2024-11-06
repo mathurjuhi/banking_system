@@ -61,17 +61,6 @@ public class AccountController {
 	    }	
 	}
 
-	
-	
-	/*
-	 * @PostMapping
-	 * 
-	 * @RequestMapping("/add/account") public ResponseEntity<Object>
-	 * createNewAccount(@RequestBody UserDto accountDto){
-	 * 
-	 * UserAccount account = accountService.createAccount(accountDto); return new
-	 * ResponseEntity<>(account,HttpStatus.OK); }
-	 */
 	@PostMapping
 	@RequestMapping("/add/account")
 	public ResponseEntity<AccountDetail> createNewAccount(@RequestBody AccountDto accountDto){
@@ -79,20 +68,6 @@ public class AccountController {
 		AccountDetail account = accountService.createAccount(accountDto);
 		return new ResponseEntity<>(account,HttpStatus.OK);
 	}
-	
-	@PostMapping("/account/deposit/{accountId}")
-    public  ResponseEntity<AccountDetail> deposit(@PathVariable Long accountId, @RequestBody Map<String, Double> request) {
-        Double amount = request.get("amount");
-        AccountDetail Acctyp= accountService.deposit(accountId, amount);
-        return new ResponseEntity<>(Acctyp,HttpStatus.OK);
-    }
-
-    @PostMapping("/account/withdraw/{accountId}")
-    public ResponseEntity<AccountDetail> withdraw(@PathVariable Long accountId, @RequestBody Map<String, Double> request) {
-        Double amount = request.get("amount");
-        AccountDetail account=  accountService.withdraw(accountId, amount);
-        return new ResponseEntity<>(account,HttpStatus.OK);
-    }
     
     @PutMapping("/account/update/{accountId}")
     public ResponseEntity<String> update(@PathVariable Long accountId, @RequestBody AccountUpdateDto updateAccount){

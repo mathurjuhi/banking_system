@@ -12,6 +12,8 @@ import com.bank.banking.dto.UserDto;
 import com.bank.banking.model.UserAccount;
 import com.bank.banking.service.UserService;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/banking")
 public class UserController {
@@ -21,7 +23,7 @@ public class UserController {
 	
 	@PostMapping
 	@RequestMapping("/add/user")
-	public ResponseEntity<Object> createUser(@RequestBody UserDto userdto){
+	public ResponseEntity<Object> createUser(@Valid @RequestBody UserDto userdto){
 
 		UserAccount account = userService.createUser(userdto);
 		return new ResponseEntity<>(account,HttpStatus.OK);

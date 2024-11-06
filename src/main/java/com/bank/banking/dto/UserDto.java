@@ -4,32 +4,48 @@ import java.time.LocalDate;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
-import jakarta.persistence.Column;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.Pattern;
 
 public class UserDto {
-	
-	//private long accountId;
+	@Valid
 
-    private String firstName;
+	@NotEmpty(message = "First name cannot be blank")
+	@NotNull(message = "First name cannot be NULL")
+	private String firstName;
 
-    private String lastName;
-	
-   // private double balance;
-    
-    private String email;
-	
-    private String userName;
-    
-    private String pass;
+	@NotEmpty(message = "Last name cannot be blank")
+	@NotNull(message = "Last name cannot be NULL")
+	private String lastName;
 
-    private String addres;
+	@Email(message = "Please enter a valid email Id")
+	@NotNull(message = "Email cannot be NULL")
+	@NotEmpty(message = "Email cannot be blank")
+	private String email;
 
-    private long mobile;
-    
-    @JsonFormat(pattern="yyyy-MM-dd")
-    private LocalDate dob;
+	@NotEmpty(message = "User name cannot be blank")
+	@NotNull(message = "User name cannot be NULL")
+	private String userName;
+
+	@NotEmpty(message = "Password cannot be blank")
+	@NotNull(message = "Password cannot be NULL")
+	private String pass;
+
+	@NotEmpty(message = "Address cannot be blank")
+	@NotNull(message = "Address cannot be NULL")
+	private String addres;
+
+	@NotEmpty(message = "Mobile cannot be blank")
+	@NotNull(message = "Mobile cannot be NULL")
+	@Pattern(regexp = "(^$|[0-9]{10})", message = "Please enter 10 digit mobile number")
+	private String mobile;
+
+	@JsonFormat(pattern = "yyyy-MM-dd")
+	@NotNull(message = "DOB cannot be NULL")
+	private LocalDate dob;
 
 	public String getFirstName() {
 		return firstName;
@@ -79,11 +95,11 @@ public class UserDto {
 		this.addres = addres;
 	}
 
-	public long getMobile() {
+	public String getMobile() {
 		return mobile;
 	}
 
-	public void setMobile(long mobile) {
+	public void setMobile(String mobile) {
 		this.mobile = mobile;
 	}
 
@@ -94,6 +110,5 @@ public class UserDto {
 	public void setDob(LocalDate dob) {
 		this.dob = dob;
 	}
-
 
 }

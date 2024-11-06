@@ -44,17 +44,18 @@ public class UserAccount{
 	private String email;
 	
 	@Column(name = "mobile")
-	private long mobile;
+	private String mobile;
 	
-	@OneToMany(mappedBy = "userAccount")
-	private List<AccountDetail> accounts = new ArrayList<>();
-	
+	/*
+	 * @OneToMany(mappedBy = "userAccount") private List<AccountDetail> accounts =
+	 * new ArrayList<>();
+	 */
 	public UserAccount() {
 		
 	}
 
 	public UserAccount(@NotNull long userId, String firstName, String lastName, @NotNull String userName,
-			String password, String address, LocalDate dob, String email, long mobile) {
+			String password, String address, LocalDate dob, String email, String mobile) {
 		super();
 		this.userId = userId;
 		this.firstName = firstName;
@@ -131,22 +132,20 @@ public class UserAccount{
 		this.email = email;
 	}
 
-	public long getMobile() {
+	public String getMobile() {
 		return mobile;
 	}
 
-	public void setMobile(long mobile) {
+	public void setMobile(String mobile) {
 		this.mobile = mobile;
 	}
 
-	
-	public List<AccountDetail> getAccounts() {
-		return accounts;
-	}
-
-	public void setAccounts(List<AccountDetail> accounts) {
-		this.accounts = accounts;
-	}
+	/*
+	 * public List<AccountDetail> getAccounts() { return accounts; }
+	 * 
+	 * public void setAccounts(List<AccountDetail> accounts) { this.accounts =
+	 * accounts; }
+	 */
 
 	@Override
 	public String toString() {

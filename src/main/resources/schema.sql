@@ -28,10 +28,11 @@ CREATE TABLE online_schema.Account_Detail(
  	balance NUMERIC(10,3) NOT NULL);
  	
 CREATE TABLE online_schema.Transaction_Detail(
-	 account_id BIGINT NOT NULL REFERENCES Account_Detail(account_id),
 	 transaction_id BIGINT NOT NULL PRIMARY KEY,
+	 account_id BIGINT NOT NULL REFERENCES Account_Detail(account_id),
 	 transaction_type VARCHAR(10) NOT NULL, 
 	 amount NUMERIC(10,3) NOT NULL, 
+	 balance NUMERIC(10,3) NOT NULL,
 	 credit BIGINT,
 	 debit BIGINT,
 	 date_of_transaction DATE NOT NULL

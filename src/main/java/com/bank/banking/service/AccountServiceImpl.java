@@ -67,43 +67,9 @@ public class AccountServiceImpl implements AccountService {
 		account.setUserAccount(user);
 		AccountDetail accountdetail =accountRepo.save(account);
 		return accountdetail;
-	/*	UserAccount userAccount = new UserAccount();
-		userAccount.setAccountId(account.getAccountId());
-		userAccount.setFirstName(account.getFirstName());
-		userAccount.setLastName(account.getLastName());
-		userAccount.setBalance(account.getBalance());
-		userAccount.setUserId(account.getUserId());
-		userAccount.setPass(account.getPass());
-		userAccount.setAddres(account.getAddres());
-		userAccount.setEmail(account.getEmail());
-		userAccount.setMobile(account.getMobile());
-
-		UserAccount account2 = accountRepo.save(userAccount);
-		if (account2 != null)
-			return account2;
-		else
-			throw new ConstraintViolationException("User with user id:" + account.getUserId() + "already exist.", null,
-					account.getUserId());
-*/
 		
 	}
 
-	@Override
-	public AccountDetail deposit(Long id, double amount) {
-		AccountDetail account = getAccountById(id);
-	/*	account.setBalance(account.getBalance() + amount);  */
-		return accountRepo.save(account);
-	}
-
-	@Override
-	public AccountDetail withdraw(Long id, double amount) {
-		AccountDetail account = getAccountById(id);
-	/* 	if (account.getBalance() < amount) {
-			throw new InsufficientFundException("User has not sufficient balance to withdraw");
-		}
-		account.setBalance(account.getBalance() - amount);  */
-		return accountRepo.save(account);
-	}
 
 	@Override
 	public void update(Long accountId, String fn, String ln, String pass, String add, String email, String mob) {
