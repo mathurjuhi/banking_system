@@ -1,13 +1,14 @@
 package com.bank.banking.service;
 
-import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.bank.banking.dto.UserDto;
-import com.bank.banking.model.AccountDetail;
+import com.bank.banking.exception.UserNotFoundException;
 import com.bank.banking.model.UserAccount;
 import com.bank.banking.repository.UserRepository;
 
@@ -38,6 +39,21 @@ public class UserServiceImpl implements UserService {
 			throw new ConstraintViolationException("User with user id:" + user.getUserName() + "already exist.",
 					null, user.getUserName());
 
+	}
+	
+	@Override
+	public List<UserAccount> getAllUsers() {
+		List<UserAccount> userAccs = userRepository.findAll();
+		return userAccs;
+	}
+
+	@Override
+	public UserAccount getUserById(long userId) {
+		Optional<UserAccount> user = Optional.ofNullable(userRepository.findByUserId(userId));
+		if(user.isPresent()) {
+			return user.get();
+		}
+		throw new UserNotFoundException("User with userId "+ userId +" doesnot exist");
 	}
 
 }
