@@ -11,8 +11,8 @@ import com.bank.banking.model.UserAccount;
 public interface AccountService {
 
 	public List<AccountDetail> getAllAccounts();
-
-	public AccountDetail getAccountByUserId(String userId);
+	
+	public AccountDetail getAccountByAccountNum(String accountNum);
 
 	public AccountDetail getAccountById(long id);
 

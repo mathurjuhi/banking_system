@@ -20,7 +20,7 @@ public class UserExceptionHandler {
 	@ResponseBody
 	public ResponseEntity<GlobalErrorType> userNotFoundExceptionHandler(UserNotFoundException userNotFoundExp) {
 		return new ResponseEntity<GlobalErrorType>(
-				new GlobalErrorType(userNotFoundExp.getMessage(), "ACCOUNT_NOT_FOUND"), HttpStatus.NOT_FOUND);
+				new GlobalErrorType(userNotFoundExp.getMessage(), "USER_NOT_FOUND"), HttpStatus.NOT_FOUND);
 	}
 
 	@ExceptionHandler(ConstraintViolationException.class)
@@ -51,5 +51,12 @@ public class UserExceptionHandler {
 		});
 
 		return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
+	}
+	
+	@ExceptionHandler(NotFoundException.class)
+	@ResponseBody
+	public ResponseEntity<GlobalErrorType> NotFoundExceptionHandler(NotFoundException NotFoundExp) {
+		return new ResponseEntity<GlobalErrorType>(
+				new GlobalErrorType(NotFoundExp.getMessage(), "NOT_FOUND"), HttpStatus.NOT_FOUND);
 	}
 }

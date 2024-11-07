@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.bank.banking.dto.AccountDto;
 import com.bank.banking.dto.UserDto;
+import com.bank.banking.exception.NotFoundException;
 import com.bank.banking.exception.UserNotFoundException;
 import com.bank.banking.model.AccountDetail;
 import com.bank.banking.model.UserAccount;
@@ -30,17 +31,16 @@ public class AccountServiceImpl implements AccountService {
 		List<AccountDetail> userAccs = accountRepo.findAll();
 		return userAccs;
 	}
-
+	
 	@Override
-	public AccountDetail getAccountByUserId(String userId) {
-		Optional<AccountDetail> account = Optional.ofNullable(accountRepo.findByUserId(userId));
+	public AccountDetail getAccountByAccountNum(String accNum) {
+		Optional<AccountDetail> account = Optional.ofNullable(accountRepo.findByAccNum(accNum));
 		if (account.isPresent()) {
 			return account.get();
 		} else {
-			throw new UserNotFoundException("Account with userId : " + userId + " Not Found");
+			throw new NotFoundException("Account with account number : " + accNum + " Not Found");
 		}
 	}
-
 	@Override
 	public AccountDetail getAccountById(long id) {
 		Optional<AccountDetail> account = accountRepo.findById(id);

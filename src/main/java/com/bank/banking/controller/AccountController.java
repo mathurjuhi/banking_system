@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bank.banking.dto.UserDto;
+import com.bank.banking.exception.NotFoundException;
 import com.bank.banking.dto.AccountDto;
 import com.bank.banking.dto.AccountUpdateDto;
 import com.bank.banking.model.UserAccount;
@@ -44,23 +45,14 @@ public class AccountController {
 		return ResponseEntity.ok(userAccs);
 	}
 	
-	@GetMapping("/getAccount/{accountId}")
-    public ResponseEntity<AccountDetail> getAccountById(@PathVariable Long accountId) {
-		AccountDetail account = accountService.getAccountById(accountId);
+	@GetMapping("/getAccount/{accountNum}")
+    public ResponseEntity<AccountDetail> getAccountByAccountNum(@PathVariable String accountNum) {
+		AccountDetail account = accountService.getAccountByAccountNum(accountNum);
 		if (account != null) {
 	        return new ResponseEntity<>(account, HttpStatus.OK);
 	    } else {
-	        return new ResponseEntity<>(null, HttpStatus.NOT_FOUND); // Return 404 if not found
+	        throw new NotFoundException("Account not found " + accountNum); // Return 404 if not found
 	    }
-	}
-	@GetMapping("/account/accountUserId/{userId}")
-	public ResponseEntity<AccountDetail> getAccountByUserId(@PathVariable String userId) {
-		AccountDetail account = accountService.getAccountByUserId(userId);
-		if (account != null) {
-	        return new ResponseEntity<>(account, HttpStatus.OK);
-	    } else {
-	        return new ResponseEntity<>(null, HttpStatus.NOT_FOUND); // Return 404 if not found
-	    }	
 	}
 
 	@PostMapping
