@@ -12,8 +12,7 @@ import com.bank.banking.model.UserAccount;
 @Repository
 public interface AccountRepository extends JpaRepository<AccountDetail, Long> {
 	
-	@Query(value = "SELECT * FROM User_Account ua WHERE user_id = ?1", nativeQuery = true)
-	AccountDetail findByUserId(String userId);
+	AccountDetail findByAccNum(String accNum);
 	
 	@Transactional
 	@Modifying
