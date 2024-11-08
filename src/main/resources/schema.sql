@@ -30,7 +30,7 @@ CREATE TABLE online_schema.Account_Detail(
 CREATE TABLE online_schema.Transaction_Detail(
 	 transaction_id BIGINT NOT NULL PRIMARY KEY,
 	 account_id BIGINT NOT NULL REFERENCES Account_Detail(account_id),
-	 transaction_type VARCHAR(10) NOT NULL, 
+	 transaction_type VARCHAR(50) NOT NULL, 
 	 amount NUMERIC(10,3) NOT NULL, 
 	 balance NUMERIC(10,3) NOT NULL,
 	 credit BIGINT,

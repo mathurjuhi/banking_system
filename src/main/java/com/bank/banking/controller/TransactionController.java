@@ -1,9 +1,14 @@
 package com.bank.banking.controller;
 
+import com.bank.banking.dto.AccountDto;
+import com.bank.banking.dto.TransferDto;
 import com.bank.banking.model.AccountDetail;
 import com.bank.banking.model.TransactionDetail;
 import com.bank.banking.repository.TransactionRepository;
 import com.bank.banking.service.TransactionService;
+
+import jakarta.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -42,5 +47,11 @@ public class TransactionController {
         Double amount = request.get("amount");
         TransactionDetail transaction=  transactionService.withdraw(accountId, amount);
         return new ResponseEntity<>(transaction,HttpStatus.OK);
+    }
+    
+    @PostMapping("/transfer")
+    public ResponseEntity<String> transferAmount(@Valid @RequestBody TransferDto transferDto){
+    	 String transaction =  transactionService.transferAmount(transferDto);
+    	return new ResponseEntity<>(transaction, HttpStatus.OK);
     }
 }
